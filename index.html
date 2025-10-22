@@ -282,6 +282,17 @@
             margin-bottom: 20px;
         }
 
+        /* Storage Warning */
+        .storage-warning {
+            background: #FFF3E0;
+            border: 1px solid #FFB74D;
+            color: #E65100;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
         /* Items Grid */
         .items-grid {
             display: grid;
@@ -296,11 +307,6 @@
             overflow: hidden;
             box-shadow: 0 3px 15px rgba(33, 150, 243, 0.1);
             cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .item-card:hover {
-            transform: translateY(-5px);
         }
 
         .item-image {
@@ -333,142 +339,6 @@
         .decision-dispose { background: #FFCCBC; color: #BF360C; }
         .decision-move-hy { background: #B3E5FC; color: #01579B; }
         .decision-move-office { background: #D1C4E9; color: #4527A0; }
-
-        /* Summary Cards */
-        .summary-card {
-            background: linear-gradient(135deg, #F5F5F5 0%, #E3F2FD 100%);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .summary-stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .stat-box {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .stat-number {
-            font-size: 28px;
-            font-weight: bold;
-            color: #1976D2;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: #607D8B;
-            margin-top: 5px;
-        }
-
-        /* Inventory Analysis */
-        .inventory-analysis {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .analysis-status {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-        }
-
-        .status-icon {
-            font-size: 40px;
-            margin-right: 15px;
-        }
-
-        .status-text {
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .status-optimal {
-            background: linear-gradient(135deg, #C8E6C9 0%, #A5D6A7 100%);
-            color: #1B5E20;
-        }
-
-        .status-excessive {
-            background: linear-gradient(135deg, #FFCCBC 0%, #FFAB91 100%);
-            color: #BF360C;
-        }
-
-        .status-minimal {
-            background: linear-gradient(135deg, #B3E5FC 0%, #81D4FA 100%);
-            color: #01579B;
-        }
-
-        .category-breakdown {
-            margin-top: 20px;
-        }
-
-        .category-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            border-bottom: 1px solid #E0E0E0;
-        }
-
-        .category-name {
-            font-weight: 500;
-            color: #333;
-        }
-
-        .category-count {
-            background: #E3F2FD;
-            color: #1976D2;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .category-warning {
-            background: #FFF3E0;
-            color: #F57C00;
-        }
-
-        /* Edit Modal */
-        .edit-modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            z-index: 10000;
-        }
-
-        .edit-modal h3 {
-            color: #1976D2;
-            margin-bottom: 20px;
-        }
-
-        .edit-modal img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
 
         .tab-content {
             display: none;
@@ -514,46 +384,17 @@
                 </div>
             </div>
 
-            <!-- Edit Modal -->
-            <div id="editModal" class="modal-overlay hidden">
-                <div class="edit-modal">
-                    <h3>Edit Item</h3>
-                    <img id="editImage" src="" alt="Item">
-                    <div class="input-group">
-                        <label>Category</label>
-                        <select id="editCategory">
-                            <option value="clothing">Clothing</option>
-                            <option value="books">Books</option>
-                            <option value="electronics">Electronics</option>
-                            <option value="kitchen">Kitchen Items</option>
-                            <option value="decor">Decor</option>
-                            <option value="documents">Documents</option>
-                            <option value="toys">Toys</option>
-                            <option value="accessories">Accessories</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label>Decision</label>
-                        <select id="editDecision">
-                            <option value="keep">Keep</option>
-                            <option value="dispose">Dispose</option>
-                            <option value="move-hy">Move to HY's</option>
-                            <option value="move-office">Move to Office</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-success" onclick="saveEdit()">Save Changes</button>
-                    <button class="btn btn-danger" onclick="deleteItem()">Delete Item</button>
-                    <button class="btn btn-secondary" onclick="closeEdit()">Cancel</button>
-                </div>
-            </div>
-
             <!-- Main App -->
             <div id="mainApp" style="display: none;">
                 <div class="nav-tabs">
                     <button class="nav-tab active" onclick="switchTab(event, 'addItem')">Add Item</button>
                     <button class="nav-tab" onclick="switchTab(event, 'myItems')">My Items</button>
                     <button class="nav-tab" onclick="switchTab(event, 'summary')">Summary</button>
+                </div>
+
+                <!-- Storage Warning -->
+                <div id="storageWarning" class="storage-warning" style="display: none;">
+                    ⚠️ Storage is getting full. Consider exporting your data.
                 </div>
 
                 <!-- Add Item Tab -->
@@ -610,67 +451,12 @@
 
                 <!-- My Items Tab -->
                 <div id="myItems" class="tab-content">
-                    <div class="input-group">
-                        <select id="filterCategory" onchange="displayItems()">
-                            <option value="all">All Categories</option>
-                            <option value="clothing">Clothing</option>
-                            <option value="books">Books</option>
-                            <option value="electronics">Electronics</option>
-                            <option value="kitchen">Kitchen Items</option>
-                            <option value="decor">Decor</option>
-                            <option value="documents">Documents</option>
-                            <option value="toys">Toys</option>
-                            <option value="accessories">Accessories</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
                     <div id="itemsGrid" class="items-grid"></div>
                 </div>
 
                 <!-- Summary Tab -->
                 <div id="summary" class="tab-content">
-                    <!-- Inventory Analysis -->
-                    <div class="inventory-analysis">
-                        <h3 style="color: #1976D2; margin-bottom: 20px;">Inventory Analysis</h3>
-                        <div id="analysisStatus" class="analysis-status status-optimal">
-                            <div class="status-icon">✅</div>
-                            <div>
-                                <div class="status-text">Just Right!</div>
-                                <div style="font-size: 14px; font-weight: normal;">Your inventory is well balanced</div>
-                            </div>
-                        </div>
-                        
-                        <div class="category-breakdown">
-                            <h4 style="color: #607D8B; margin-bottom: 15px;">Category Breakdown</h4>
-                            <div id="categoryBreakdown"></div>
-                        </div>
-                    </div>
-
-                    <!-- Stats -->
-                    <div class="summary-card">
-                        <h3 style="color: #1976D2; margin-bottom: 20px;">Statistics</h3>
-                        <div class="summary-stats">
-                            <div class="stat-box">
-                                <div class="stat-number" id="totalStat">0</div>
-                                <div class="stat-label">Total Items</div>
-                            </div>
-                            <div class="stat-box">
-                                <div class="stat-number" id="keptStat">0</div>
-                                <div class="stat-label">Items Kept</div>
-                            </div>
-                            <div class="stat-box">
-                                <div class="stat-number" id="disposedStat">0</div>
-                                <div class="stat-label">Items Disposed</div>
-                            </div>
-                            <div class="stat-box">
-                                <div class="stat-number" id="movedStat">0</div>
-                                <div class="stat-label">Items Moved</div>
-                            </div>
-                        </div>
-                        
-                        <button class="btn btn-secondary" onclick="exportData()">Export Data</button>
-                        <button class="btn btn-danger" onclick="clearData()">Clear All Data</button>
-                    </div>
+                    <p>Summary content will go here</p>
                 </div>
             </div>
         </div>
@@ -680,19 +466,6 @@
         // Constants
         const PASSWORD = 'GTL1990';
         const STORAGE_KEY = 'curatorAIItems';
-        
-        // Optimal item counts per category
-        const OPTIMAL_COUNTS = {
-            clothing: { min: 20, max: 50 },
-            books: { min: 10, max: 30 },
-            electronics: { min: 5, max: 15 },
-            kitchen: { min: 15, max: 40 },
-            decor: { min: 5, max: 20 },
-            documents: { min: 10, max: 30 },
-            toys: { min: 5, max: 15 },
-            accessories: { min: 5, max: 20 },
-            other: { min: 5, max: 20 }
-        };
         
         // Global state
         let currentItem = {
@@ -705,7 +478,6 @@
         
         let currentStep = 0;
         let answers = [];
-        let editingIndex = -1;
         
         // Coaching questions
         const questions = [
@@ -723,6 +495,69 @@
             }
         ];
 
+        // Check localStorage availability
+        function isLocalStorageAvailable() {
+            try {
+                const test = '__localStorage_test__';
+                localStorage.setItem(test, test);
+                localStorage.removeItem(test);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        // Check storage space
+        function checkStorageSpace() {
+            try {
+                const used = new Blob(Object.values(localStorage)).size;
+                const estimatedMax = 5 * 1024 * 1024; // 5MB estimate
+                if (used > estimatedMax * 0.8) {
+                    document.getElementById('storageWarning').style.display = 'block';
+                    return false;
+                }
+                return true;
+            } catch (e) {
+                return true; // Assume it's okay if we can't check
+            }
+        }
+
+        // Compress image
+        function compressImage(dataUrl, callback) {
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                // Set maximum dimensions
+                let width = img.width;
+                let height = img.height;
+                const maxSize = 400;
+                
+                if (width > height) {
+                    if (width > maxSize) {
+                        height *= maxSize / width;
+                        width = maxSize;
+                    }
+                } else {
+                    if (height > maxSize) {
+                        width *= maxSize / height;
+                        height = maxSize;
+                    }
+                }
+                
+                canvas.width = width;
+                canvas.height = height;
+                
+                ctx.drawImage(img, 0, 0, width, height);
+                
+                // Convert to compressed JPEG
+                const compressed = canvas.toDataURL('image/jpeg', 0.6);
+                callback(compressed);
+            };
+            img.src = dataUrl;
+        }
+
         // Password check
         function checkPassword() {
             const input = document.getElementById('passwordInput');
@@ -731,9 +566,15 @@
             if (input.value === PASSWORD) {
                 document.getElementById('passwordModal').classList.add('hidden');
                 document.getElementById('mainApp').style.display = 'block';
-                localStorage.setItem('curatorAIAuth', 'true');
+                
+                try {
+                    localStorage.setItem('curatorAIAuth', 'true');
+                } catch (e) {
+                    console.log('Cannot save auth state');
+                }
+                
                 updateItemsCounter();
-                updateStats();
+                checkStorageSpace();
             } else {
                 error.textContent = 'Incorrect password. Please try again.';
                 input.value = '';
@@ -750,21 +591,21 @@
             
             if (tabName === 'myItems') {
                 displayItems();
-            } else if (tabName === 'summary') {
-                updateStats();
-                analyzeInventory();
             }
         }
 
-        // Handle image upload
+        // Handle image upload with compression
         function handleImageUpload(event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    currentItem.image = e.target.result;
-                    document.getElementById('imagePreview').src = e.target.result;
-                    document.getElementById('imagePreview').style.display = 'block';
+                    // Compress the image before storing
+                    compressImage(e.target.result, function(compressed) {
+                        currentItem.image = compressed;
+                        document.getElementById('imagePreview').src = compressed;
+                        document.getElementById('imagePreview').style.display = 'block';
+                    });
                 };
                 reader.readAsDataURL(file);
             }
@@ -868,21 +709,56 @@
             document.getElementById('decisionSection').innerHTML = html;
         }
 
-        // Save decision - FIXED
+        // Save decision with better error handling
         function saveDecision() {
+            if (!isLocalStorageAvailable()) {
+                alert('Storage is not available. Please check your browser settings or try using regular browsing mode (not private/incognito).');
+                return;
+            }
+            
             try {
                 currentItem.timestamp = new Date().toISOString();
+                currentItem.id = Date.now(); // Add unique ID
                 
-                let items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+                // Get existing items
+                let items = [];
+                try {
+                    const stored = localStorage.getItem(STORAGE_KEY);
+                    if (stored) {
+                        items = JSON.parse(stored);
+                    }
+                } catch (parseError) {
+                    console.error('Error parsing stored items:', parseError);
+                    items = [];
+                }
+                
+                // Add new item
                 items.push(currentItem);
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+                
+                // Try to save
+                const dataStr = JSON.stringify(items);
+                
+                // Check size before saving
+                if (dataStr.length > 4 * 1024 * 1024) { // 4MB limit
+                    alert('Storage limit reached. Please export your data and clear some items.');
+                    return;
+                }
+                
+                localStorage.setItem(STORAGE_KEY, dataStr);
                 
                 alert('Item saved successfully!');
                 resetProcess();
                 updateItemsCounter();
+                checkStorageSpace();
+                
             } catch (error) {
-                console.error('Error saving:', error);
-                alert('Error saving item. Please try again.');
+                console.error('Save error:', error);
+                
+                if (error.name === 'QuotaExceededError') {
+                    alert('Storage is full. Please export your data and clear some items.');
+                } else {
+                    alert('Unable to save. Try clearing your browser cache or using a different browser.');
+                }
             }
         }
 
@@ -910,201 +786,40 @@
             document.getElementById('decisionSection').style.display = 'none';
         }
 
-        // Display items with edit capability
+        // Display items
         function displayItems() {
-            const items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-            const filter = document.getElementById('filterCategory').value;
-            
-            const filtered = filter === 'all' ? items : items.filter(i => i.category === filter);
-            
-            const grid = document.getElementById('itemsGrid');
-            
-            if (filtered.length === 0) {
-                grid.innerHTML = '<p>No items found.</p>';
-                return;
-            }
-            
-            grid.innerHTML = filtered.map((item, index) => `
-                <div class="item-card" onclick="editItem(${items.indexOf(item)})">
-                    <img src="${item.image}" alt="Item" class="item-image">
-                    <div class="item-info">
-                        <div class="item-category">${item.category}</div>
-                        <div class="item-decision decision-${item.decision}">
-                            ${item.decision.replace('-', ' ')}
+            try {
+                const items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+                const grid = document.getElementById('itemsGrid');
+                
+                if (items.length === 0) {
+                    grid.innerHTML = '<p>No items found.</p>';
+                    return;
+                }
+                
+                grid.innerHTML = items.map(item => `
+                    <div class="item-card">
+                        <img src="${item.image}" alt="Item" class="item-image">
+                        <div class="item-info">
+                            <div class="item-category">${item.category}</div>
+                            <div class="item-decision decision-${item.decision}">
+                                ${item.decision.replace('-', ' ')}
+                            </div>
                         </div>
                     </div>
-                </div>
-            `).join('');
-        }
-
-        // Edit item
-        function editItem(index) {
-            const items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-            const item = items[index];
-            
-            editingIndex = index;
-            
-            document.getElementById('editImage').src = item.image;
-            document.getElementById('editCategory').value = item.category;
-            document.getElementById('editDecision').value = item.decision;
-            
-            document.getElementById('editModal').classList.remove('hidden');
-        }
-
-        // Save edit
-        function saveEdit() {
-            let items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-            
-            items[editingIndex].category = document.getElementById('editCategory').value;
-            items[editingIndex].decision = document.getElementById('editDecision').value;
-            
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-            
-            closeEdit();
-            displayItems();
-            updateItemsCounter();
-            alert('Item updated successfully!');
-        }
-
-        // Delete item
-        function deleteItem() {
-            if (confirm('Are you sure you want to delete this item?')) {
-                let items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-                items.splice(editingIndex, 1);
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-                
-                closeEdit();
-                displayItems();
-                updateItemsCounter();
-                alert('Item deleted successfully!');
+                `).join('');
+            } catch (error) {
+                document.getElementById('itemsGrid').innerHTML = '<p>Unable to load items.</p>';
             }
-        }
-
-        // Close edit modal
-        function closeEdit() {
-            document.getElementById('editModal').classList.add('hidden');
-            editingIndex = -1;
         }
 
         // Update items counter
         function updateItemsCounter() {
-            const items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-            document.getElementById('itemsCounter').textContent = `${items.length} items`;
-        }
-
-        // Update statistics
-        function updateStats() {
-            const items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-            
-            const stats = {
-                total: items.length,
-                kept: items.filter(i => i.decision === 'keep').length,
-                disposed: items.filter(i => i.decision === 'dispose').length,
-                moved: items.filter(i => i.decision.startsWith('move')).length
-            };
-            
-            document.getElementById('totalStat').textContent = stats.total;
-            document.getElementById('keptStat').textContent = stats.kept;
-            document.getElementById('disposedStat').textContent = stats.disposed;
-            document.getElementById('movedStat').textContent = stats.moved;
-        }
-
-        // Analyze inventory
-        function analyzeInventory() {
-            const items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-            
-            // Count items per category
-            const categoryCounts = {};
-            items.forEach(item => {
-                if (item.decision === 'keep') {
-                    categoryCounts[item.category] = (categoryCounts[item.category] || 0) + 1;
-                }
-            });
-            
-            // Determine overall status
-            let excessive = 0;
-            let optimal = 0;
-            let minimal = 0;
-            
-            Object.keys(OPTIMAL_COUNTS).forEach(cat => {
-                const count = categoryCounts[cat] || 0;
-                const range = OPTIMAL_COUNTS[cat];
-                
-                if (count > range.max) excessive++;
-                else if (count < range.min) minimal++;
-                else optimal++;
-            });
-            
-            // Update status display
-            const statusDiv = document.getElementById('analysisStatus');
-            if (excessive >= 3) {
-                statusDiv.className = 'analysis-status status-excessive';
-                statusDiv.innerHTML = `
-                    <div class="status-icon">⚠️</div>
-                    <div>
-                        <div class="status-text">Too Much!</div>
-                        <div style="font-size: 14px; font-weight: normal;">Consider decluttering some categories</div>
-                    </div>
-                `;
-            } else if (minimal >= 5) {
-                statusDiv.className = 'analysis-status status-minimal';
-                statusDiv.innerHTML = `
-                    <div class="status-icon">📦</div>
-                    <div>
-                        <div class="status-text">Minimalist!</div>
-                        <div style="font-size: 14px; font-weight: normal;">You have a lean inventory</div>
-                    </div>
-                `;
-            } else {
-                statusDiv.className = 'analysis-status status-optimal';
-                statusDiv.innerHTML = `
-                    <div class="status-icon">✅</div>
-                    <div>
-                        <div class="status-text">Just Right!</div>
-                        <div style="font-size: 14px; font-weight: normal;">Your inventory is well balanced</div>
-                    </div>
-                `;
-            }
-            
-            // Show category breakdown
-            const breakdownDiv = document.getElementById('categoryBreakdown');
-            breakdownDiv.innerHTML = Object.keys(OPTIMAL_COUNTS).map(cat => {
-                const count = categoryCounts[cat] || 0;
-                const range = OPTIMAL_COUNTS[cat];
-                const isWarning = count > range.max;
-                
-                return `
-                    <div class="category-item">
-                        <div class="category-name">${cat}</div>
-                        <div class="category-count ${isWarning ? 'category-warning' : ''}">
-                            ${count} ${count > range.max ? '⚠️' : ''}
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // Export data
-        function exportData() {
-            const items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-            const dataStr = JSON.stringify(items, null, 2);
-            const blob = new Blob([dataStr], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `curator-ai-${new Date().toISOString().split('T')[0]}.json`;
-            a.click();
-        }
-
-        // Clear data
-        function clearData() {
-            if (confirm('Are you sure you want to clear all data?')) {
-                localStorage.removeItem(STORAGE_KEY);
-                updateItemsCounter();
-                updateStats();
-                displayItems();
-                analyzeInventory();
-                alert('All data cleared.');
+            try {
+                const items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+                document.getElementById('itemsCounter').textContent = `${items.length} items`;
+            } catch (error) {
+                document.getElementById('itemsCounter').textContent = '0 items';
             }
         }
 
@@ -1116,23 +831,27 @@
         window.answerQuestion = answerQuestion;
         window.saveDecision = saveDecision;
         window.resetProcess = resetProcess;
-        window.displayItems = displayItems;
-        window.editItem = editItem;
-        window.saveEdit = saveEdit;
-        window.deleteItem = deleteItem;
-        window.closeEdit = closeEdit;
-        window.exportData = exportData;
-        window.clearData = clearData;
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            if (localStorage.getItem('curatorAIAuth') === 'true') {
-                document.getElementById('passwordModal').classList.add('hidden');
-                document.getElementById('mainApp').style.display = 'block';
-                updateItemsCounter();
-                updateStats();
+            // Check if localStorage is available
+            if (!isLocalStorageAvailable()) {
+                console.warn('localStorage not available');
             }
             
+            // Try to check auth
+            try {
+                if (localStorage.getItem('curatorAIAuth') === 'true') {
+                    document.getElementById('passwordModal').classList.add('hidden');
+                    document.getElementById('mainApp').style.display = 'block';
+                    updateItemsCounter();
+                    checkStorageSpace();
+                }
+            } catch (e) {
+                console.log('Cannot check auth state');
+            }
+            
+            // Add enter key support
             document.getElementById('passwordInput').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') checkPassword();
             });
