@@ -182,6 +182,8 @@
             border: none;
             width: 100%;
             margin-top: 10px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
 
         .btn-primary {
@@ -254,10 +256,6 @@
             cursor: pointer;
         }
 
-        .coaching-btn:active {
-            transform: scale(0.98);
-        }
-
         /* Decision Result */
         .decision-card {
             background: linear-gradient(135deg, #C8E6C9 0%, #A5D6A7 100%);
@@ -285,6 +283,58 @@
         }
 
         /* Items Grid */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .item-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(33, 150, 243, 0.1);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .item-info {
+            padding: 12px;
+        }
+
+        .item-category {
+            font-size: 12px;
+            color: #1976D2;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .item-decision {
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 8px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .decision-keep { background: #C8E6C9; color: #1B5E20; }
+        .decision-dispose { background: #FFCCBC; color: #BF360C; }
+        .decision-move-hy { background: #B3E5FC; color: #01579B; }
+        .decision-move-office { background: #D1C4E9; color: #4527A0; }
+
+        /* Summary Cards */
         .summary-card {
             background: linear-gradient(135deg, #F5F5F5 0%, #E3F2FD 100%);
             border-radius: 15px;
@@ -319,49 +369,106 @@
             margin-top: 5px;
         }
 
-        .items-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+        /* Inventory Analysis */
+        .inventory-analysis {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .analysis-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .status-icon {
+            font-size: 40px;
+            margin-right: 15px;
+        }
+
+        .status-text {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .status-optimal {
+            background: linear-gradient(135deg, #C8E6C9 0%, #A5D6A7 100%);
+            color: #1B5E20;
+        }
+
+        .status-excessive {
+            background: linear-gradient(135deg, #FFCCBC 0%, #FFAB91 100%);
+            color: #BF360C;
+        }
+
+        .status-minimal {
+            background: linear-gradient(135deg, #B3E5FC 0%, #81D4FA 100%);
+            color: #01579B;
+        }
+
+        .category-breakdown {
             margin-top: 20px;
         }
 
-        .item-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 3px 15px rgba(33, 150, 243, 0.1);
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #E0E0E0;
         }
 
-        .item-image {
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
+        .category-name {
+            font-weight: 500;
+            color: #333;
         }
 
-        .item-info {
-            padding: 12px;
-        }
-
-        .item-category {
-            font-size: 12px;
+        .category-count {
+            background: #E3F2FD;
             color: #1976D2;
-            text-transform: uppercase;
-            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: bold;
         }
 
-        .item-decision {
-            font-size: 11px;
-            font-weight: 600;
-            margin-top: 8px;
-            padding: 4px 8px;
-            border-radius: 6px;
-            display: inline-block;
+        .category-warning {
+            background: #FFF3E0;
+            color: #F57C00;
         }
 
-        .decision-keep { background: #C8E6C9; color: #1B5E20; }
-        .decision-dispose { background: #FFCCBC; color: #BF360C; }
-        .decision-move { background: #B3E5FC; color: #01579B; }
+        /* Edit Modal */
+        .edit-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            z-index: 10000;
+        }
+
+        .edit-modal h3 {
+            color: #1976D2;
+            margin-bottom: 20px;
+        }
+
+        .edit-modal img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
 
         .tab-content {
             display: none;
@@ -404,6 +511,40 @@
                         <button onclick="checkPassword()">Unlock</button>
                         <div id="errorMessage" style="color: #D32F2F; margin-top: 10px; text-align: center;"></div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Edit Modal -->
+            <div id="editModal" class="modal-overlay hidden">
+                <div class="edit-modal">
+                    <h3>Edit Item</h3>
+                    <img id="editImage" src="" alt="Item">
+                    <div class="input-group">
+                        <label>Category</label>
+                        <select id="editCategory">
+                            <option value="clothing">Clothing</option>
+                            <option value="books">Books</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="kitchen">Kitchen Items</option>
+                            <option value="decor">Decor</option>
+                            <option value="documents">Documents</option>
+                            <option value="toys">Toys</option>
+                            <option value="accessories">Accessories</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Decision</label>
+                        <select id="editDecision">
+                            <option value="keep">Keep</option>
+                            <option value="dispose">Dispose</option>
+                            <option value="move-hy">Move to HY's</option>
+                            <option value="move-office">Move to Office</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-success" onclick="saveEdit()">Save Changes</button>
+                    <button class="btn btn-danger" onclick="deleteItem()">Delete Item</button>
+                    <button class="btn btn-secondary" onclick="closeEdit()">Cancel</button>
                 </div>
             </div>
 
@@ -488,8 +629,26 @@
 
                 <!-- Summary Tab -->
                 <div id="summary" class="tab-content">
+                    <!-- Inventory Analysis -->
+                    <div class="inventory-analysis">
+                        <h3 style="color: #1976D2; margin-bottom: 20px;">Inventory Analysis</h3>
+                        <div id="analysisStatus" class="analysis-status status-optimal">
+                            <div class="status-icon">✅</div>
+                            <div>
+                                <div class="status-text">Just Right!</div>
+                                <div style="font-size: 14px; font-weight: normal;">Your inventory is well balanced</div>
+                            </div>
+                        </div>
+                        
+                        <div class="category-breakdown">
+                            <h4 style="color: #607D8B; margin-bottom: 15px;">Category Breakdown</h4>
+                            <div id="categoryBreakdown"></div>
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
                     <div class="summary-card">
-                        <h3 style="color: #1976D2; margin-bottom: 20px;">Your Items Overview</h3>
+                        <h3 style="color: #1976D2; margin-bottom: 20px;">Statistics</h3>
                         <div class="summary-stats">
                             <div class="stat-box">
                                 <div class="stat-number" id="totalStat">0</div>
@@ -522,6 +681,19 @@
         const PASSWORD = 'GTL1990';
         const STORAGE_KEY = 'curatorAIItems';
         
+        // Optimal item counts per category
+        const OPTIMAL_COUNTS = {
+            clothing: { min: 20, max: 50 },
+            books: { min: 10, max: 30 },
+            electronics: { min: 5, max: 15 },
+            kitchen: { min: 15, max: 40 },
+            decor: { min: 5, max: 20 },
+            documents: { min: 10, max: 30 },
+            toys: { min: 5, max: 15 },
+            accessories: { min: 5, max: 20 },
+            other: { min: 5, max: 20 }
+        };
+        
         // Global state
         let currentItem = {
             image: null,
@@ -533,6 +705,7 @@
         
         let currentStep = 0;
         let answers = [];
+        let editingIndex = -1;
         
         // Coaching questions
         const questions = [
@@ -558,6 +731,7 @@
             if (input.value === PASSWORD) {
                 document.getElementById('passwordModal').classList.add('hidden');
                 document.getElementById('mainApp').style.display = 'block';
+                localStorage.setItem('curatorAIAuth', 'true');
                 updateItemsCounter();
                 updateStats();
             } else {
@@ -568,19 +742,17 @@
 
         // Tab switching
         function switchTab(event, tabName) {
-            // Update nav
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
             
-            // Update content
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.getElementById(tabName).classList.add('active');
             
-            // Load data if needed
             if (tabName === 'myItems') {
                 displayItems();
             } else if (tabName === 'summary') {
                 updateStats();
+                analyzeInventory();
             }
         }
 
@@ -653,10 +825,9 @@
             let icon = '';
             let message = '';
             
-            // Simple decision logic
-            const joyAnswer = answers[0]; // 0=joy, 1=no joy, 2=unsure
-            const useAnswer = answers[1]; // 0=recent, 1=6months, 2=year+
-            const buyAnswer = answers[2]; // 0=yes, 1=maybe, 2=no
+            const joyAnswer = answers[0];
+            const useAnswer = answers[1];
+            const buyAnswer = answers[2];
             
             if (joyAnswer === 0 && useAnswer === 0) {
                 decision = 'keep';
@@ -697,17 +868,22 @@
             document.getElementById('decisionSection').innerHTML = html;
         }
 
-        // Save decision
+        // Save decision - FIXED
         function saveDecision() {
-            currentItem.timestamp = new Date().toISOString();
-            
-            let items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-            items.push(currentItem);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-            
-            alert('Item saved successfully!');
-            resetProcess();
-            updateItemsCounter();
+            try {
+                currentItem.timestamp = new Date().toISOString();
+                
+                let items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+                items.push(currentItem);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+                
+                alert('Item saved successfully!');
+                resetProcess();
+                updateItemsCounter();
+            } catch (error) {
+                console.error('Error saving:', error);
+                alert('Error saving item. Please try again.');
+            }
         }
 
         // Reset process
@@ -734,7 +910,7 @@
             document.getElementById('decisionSection').style.display = 'none';
         }
 
-        // Display items
+        // Display items with edit capability
         function displayItems() {
             const items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
             const filter = document.getElementById('filterCategory').value;
@@ -748,17 +924,66 @@
                 return;
             }
             
-            grid.innerHTML = filtered.map(item => `
-                <div class="item-card">
+            grid.innerHTML = filtered.map((item, index) => `
+                <div class="item-card" onclick="editItem(${items.indexOf(item)})">
                     <img src="${item.image}" alt="Item" class="item-image">
                     <div class="item-info">
                         <div class="item-category">${item.category}</div>
-                        <div class="item-decision decision-${item.decision.split('-')[0]}">
+                        <div class="item-decision decision-${item.decision}">
                             ${item.decision.replace('-', ' ')}
                         </div>
                     </div>
                 </div>
             `).join('');
+        }
+
+        // Edit item
+        function editItem(index) {
+            const items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            const item = items[index];
+            
+            editingIndex = index;
+            
+            document.getElementById('editImage').src = item.image;
+            document.getElementById('editCategory').value = item.category;
+            document.getElementById('editDecision').value = item.decision;
+            
+            document.getElementById('editModal').classList.remove('hidden');
+        }
+
+        // Save edit
+        function saveEdit() {
+            let items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            
+            items[editingIndex].category = document.getElementById('editCategory').value;
+            items[editingIndex].decision = document.getElementById('editDecision').value;
+            
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+            
+            closeEdit();
+            displayItems();
+            updateItemsCounter();
+            alert('Item updated successfully!');
+        }
+
+        // Delete item
+        function deleteItem() {
+            if (confirm('Are you sure you want to delete this item?')) {
+                let items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+                items.splice(editingIndex, 1);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+                
+                closeEdit();
+                displayItems();
+                updateItemsCounter();
+                alert('Item deleted successfully!');
+            }
+        }
+
+        // Close edit modal
+        function closeEdit() {
+            document.getElementById('editModal').classList.add('hidden');
+            editingIndex = -1;
         }
 
         // Update items counter
@@ -784,6 +1009,81 @@
             document.getElementById('movedStat').textContent = stats.moved;
         }
 
+        // Analyze inventory
+        function analyzeInventory() {
+            const items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            
+            // Count items per category
+            const categoryCounts = {};
+            items.forEach(item => {
+                if (item.decision === 'keep') {
+                    categoryCounts[item.category] = (categoryCounts[item.category] || 0) + 1;
+                }
+            });
+            
+            // Determine overall status
+            let excessive = 0;
+            let optimal = 0;
+            let minimal = 0;
+            
+            Object.keys(OPTIMAL_COUNTS).forEach(cat => {
+                const count = categoryCounts[cat] || 0;
+                const range = OPTIMAL_COUNTS[cat];
+                
+                if (count > range.max) excessive++;
+                else if (count < range.min) minimal++;
+                else optimal++;
+            });
+            
+            // Update status display
+            const statusDiv = document.getElementById('analysisStatus');
+            if (excessive >= 3) {
+                statusDiv.className = 'analysis-status status-excessive';
+                statusDiv.innerHTML = `
+                    <div class="status-icon">⚠️</div>
+                    <div>
+                        <div class="status-text">Too Much!</div>
+                        <div style="font-size: 14px; font-weight: normal;">Consider decluttering some categories</div>
+                    </div>
+                `;
+            } else if (minimal >= 5) {
+                statusDiv.className = 'analysis-status status-minimal';
+                statusDiv.innerHTML = `
+                    <div class="status-icon">📦</div>
+                    <div>
+                        <div class="status-text">Minimalist!</div>
+                        <div style="font-size: 14px; font-weight: normal;">You have a lean inventory</div>
+                    </div>
+                `;
+            } else {
+                statusDiv.className = 'analysis-status status-optimal';
+                statusDiv.innerHTML = `
+                    <div class="status-icon">✅</div>
+                    <div>
+                        <div class="status-text">Just Right!</div>
+                        <div style="font-size: 14px; font-weight: normal;">Your inventory is well balanced</div>
+                    </div>
+                `;
+            }
+            
+            // Show category breakdown
+            const breakdownDiv = document.getElementById('categoryBreakdown');
+            breakdownDiv.innerHTML = Object.keys(OPTIMAL_COUNTS).map(cat => {
+                const count = categoryCounts[cat] || 0;
+                const range = OPTIMAL_COUNTS[cat];
+                const isWarning = count > range.max;
+                
+                return `
+                    <div class="category-item">
+                        <div class="category-name">${cat}</div>
+                        <div class="category-count ${isWarning ? 'category-warning' : ''}">
+                            ${count} ${count > range.max ? '⚠️' : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
         // Export data
         function exportData() {
             const items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
@@ -803,13 +1103,29 @@
                 updateItemsCounter();
                 updateStats();
                 displayItems();
+                analyzeInventory();
                 alert('All data cleared.');
             }
         }
 
+        // Make functions globally accessible
+        window.checkPassword = checkPassword;
+        window.switchTab = switchTab;
+        window.handleImageUpload = handleImageUpload;
+        window.startProcess = startProcess;
+        window.answerQuestion = answerQuestion;
+        window.saveDecision = saveDecision;
+        window.resetProcess = resetProcess;
+        window.displayItems = displayItems;
+        window.editItem = editItem;
+        window.saveEdit = saveEdit;
+        window.deleteItem = deleteItem;
+        window.closeEdit = closeEdit;
+        window.exportData = exportData;
+        window.clearData = clearData;
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if already authenticated
             if (localStorage.getItem('curatorAIAuth') === 'true') {
                 document.getElementById('passwordModal').classList.add('hidden');
                 document.getElementById('mainApp').style.display = 'block';
@@ -817,7 +1133,6 @@
                 updateStats();
             }
             
-            // Password enter key
             document.getElementById('passwordInput').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') checkPassword();
             });
