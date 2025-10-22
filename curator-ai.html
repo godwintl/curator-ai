@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curator AI - Intelligent Life Organization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 50%, #90CAF9 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(33, 150, 243, 0.15);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #42A5F5 0%, #1E88E5 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -100px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .header p {
+            opacity: 0.95;
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        /* Login Screen */
+        #loginScreen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+
+        .login-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #42A5F5;
+        }
+
+        button {
+            background: linear-gradient(135deg, #42A5F5 0%, #2196F3 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(33, 150, 243, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .secondary-btn {
+            background: linear-gradient(135deg, #F5F5F5 0%, #E3F2FD 100%);
+            color: #1976D2;
+            border: 1px solid rgba(33, 150, 243, 0.2);
+        }
+
+        .secondary-btn:hover {
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+        }
+
+        .error {
+            color: #D32F2F;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        /* Login Screen */
+        #loginScreen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+
+        .login-icon {
+            font-size: 70px;
+            margin-bottom: 30px;
+            filter: hue-rotate(200deg);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Image Capture */
+        #imagePreview {
+            width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        #imageInput {
+            display: none;
+        }
+
+        .capture-btn {
+            background: linear-gradient(135deg, #E3F2FD 0%, #F5F5F5 100%);
+            color: #1976D2;
+            border: 2px dashed #64B5F6;
+            padding: 40px;
+            text-align: center;
+            border-radius: 15px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .capture-btn:hover {
+            background: linear-gradient(135deg, #BBDEFB 0%, #E3F2FD 100%);
+            border-color: #42A5F5;
+            transform: scale(1.02);
+        }
+
+        /* Coaching Section */
+        .coaching-card {
+            background: linear-gradient(135deg, #F5F5F5 0%, #E3F2FD 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(33, 150, 243, 0.1);
+        }
+
+        .coaching-question {
+            font-size: 18px;
+            color: #1565C0;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .coaching-tip {
+            background: linear-gradient(135deg, #E1F5FE 0%, #B3E5FC 100%);
+            border-left: 4px solid #29B6F6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #01579B;
+        }
+
+        /* Items List */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .item-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(33, 150, 243, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(33, 150, 243, 0.05);
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 25px rgba(33, 150, 243, 0.2);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .item-info {
+            padding: 12px;
+        }
+
+        .item-category {
+            font-size: 12px;
+            color: #1976D2;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .item-location {
+            font-size: 11px;
+            color: #607D8B;
+            margin-top: 5px;
+        }
+
+        .item-decision {
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 8px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .decision-keep { 
+            background: linear-gradient(135deg, #C8E6C9 0%, #A5D6A7 100%); 
+            color: #1B5E20; 
+        }
+        .decision-dispose { 
+            background: linear-gradient(135deg, #FFCCBC 0%, #FFAB91 100%); 
+            color: #BF360C; 
+        }
+        .decision-move { 
+            background: linear-gradient(135deg, #B3E5FC 0%, #81D4FA 100%); 
+            color: #01579B; 
+        }
+
+        /* Stats Dashboard */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #42A5F5 0%, #1E88E5 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.3);
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        /* Alert */
+        .alert {
+            background: linear-gradient(135deg, #E1F5FE 0%, #B3E5FC 100%);
+            border: 1px solid #29B6F6;
+            color: #01579B;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(33, 150, 243, 0.1);
+        }
+
+        .alert-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #E3F2FD;
+        }
+
+        .nav-tab {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            color: #90A4AE;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab:hover {
+            color: #42A5F5;
+        }
+
+        .nav-tab.active {
+            color: #1976D2;
+            border-bottom-color: #2196F3;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .items-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Curator AI</h1>
+            <p>Intelligent decisions for intentional living</p>
+        </div>
+
+        <div class="content">
+            <!-- Login Screen -->
+            <div id="loginScreen" class="screen active">
+                <div class="login-icon">🔐</div>
+                <div class="input-group" style="max-width: 300px;">
+                    <label for="password">Enter Password</label>
+                    <input type="password" id="password" placeholder="Enter your password">
+                    <div id="loginError" class="error"></div>
+                    <button onclick="login()">Login</button>
+                </div>
+            </div>
+
+            <!-- Main App -->
+            <div id="mainApp" class="screen">
+                <div class="nav-tabs">
+                    <button class="nav-tab active" onclick="switchTab('addItem')">Add Item</button>
+                    <button class="nav-tab" onclick="switchTab('myItems')">My Items</button>
+                    <button class="nav-tab" onclick="switchTab('dashboard')">Dashboard</button>
+                </div>
+
+                <!-- Add Item Tab -->
+                <div id="addItemTab" class="tab-content active">
+                    <div id="alertSection"></div>
+
+                    <div class="capture-btn" onclick="document.getElementById('imageInput').click()">
+                        <div style="font-size: 40px;">📸</div>
+                        <div>Click to capture or upload image</div>
+                    </div>
+                    <input type="file" id="imageInput" accept="image/*" onchange="handleImageUpload(event)">
+                    <img id="imagePreview" alt="Item preview">
+
+                    <div class="input-group">
+                        <label for="itemCategory">What type of item is this?</label>
+                        <select id="itemCategory">
+                            <option value="">Select category...</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="books">Books</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="kitchen">Kitchen Items</option>
+                            <option value="decor">Decor</option>
+                            <option value="documents">Documents</option>
+                            <option value="toys">Toys</option>
+                            <option value="accessories">Accessories</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="itemLocation">Where did you find this?</label>
+                        <select id="itemLocation">
+                            <option value="">Select location...</option>
+                            <option value="home">Home</option>
+                            <option value="hy-home">HY's Home</option>
+                            <option value="office">Office</option>
+                            <option value="storage">Storage</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="itemDescription">Brief description (optional)</label>
+                        <input type="text" id="itemDescription" placeholder="e.g., Blue winter jacket">
+                    </div>
+
+                    <div id="coachingSection" style="display: none;">
+                        <div class="coaching-card">
+                            <div class="coaching-question" id="coachingQuestion"></div>
+                            <div id="coachingButtons"></div>
+                        </div>
+                    </div>
+
+                    <button id="startCoaching" onclick="startCoaching()">Start Mindful Decision Process</button>
+                </div>
+
+                <!-- My Items Tab -->
+                <div id="myItemsTab" class="tab-content" style="display: none;">
+                    <div class="input-group">
+                        <select id="filterCategory" onchange="displayItems()">
+                            <option value="all">All Categories</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="books">Books</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="kitchen">Kitchen Items</option>
+                            <option value="decor">Decor</option>
+                            <option value="documents">Documents</option>
+                            <option value="toys">Toys</option>
+                            <option value="accessories">Accessories</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div id="itemsGrid" class="items-grid"></div>
+                </div>
+
+                <!-- Dashboard Tab -->
+                <div id="dashboardTab" class="tab-content" style="display: none;">
+                    <div class="stats">
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalItems">0</div>
+                            <div class="stat-label">Total Items</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="itemsKept">0</div>
+                            <div class="stat-label">Items Kept</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="itemsDisposed">0</div>
+                            <div class="stat-label">Items Disposed</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="itemsMoved">0</div>
+                            <div class="stat-label">Items Moved</div>
+                        </div>
+                    </div>
+
+                    <div class="coaching-tip">
+                        <strong>AI Insight:</strong> Your possessions should support your ideal lifestyle. I analyze patterns in your decisions to help you maintain a curated, intentional space that brings you peace and clarity.
+                    </div>
+
+                    <button onclick="exportData()">Export My Data</button>
+                    <button class="secondary-btn" onclick="clearAllData()">Clear All Data</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Constants
+        const PASSWORD = 'GTL1990';
+        const STORAGE_KEY = 'curatorAIItems';
+        const MAX_ITEMS_PER_CATEGORY = 10;
+
+        // State
+        let currentItem = {
+            image: null,
+            category: '',
+            location: '',
+            description: '',
+            decision: '',
+            timestamp: null
+        };
+
+        let coachingStep = 0;
+        let joyResponse = '';
+
+        // Coaching questions inspired by Marie Kondo
+        const coachingFlow = [
+            {
+                question: "Pick up this item. Does it spark joy? 🌟",
+                buttons: [
+                    { text: "Yes, it sparks joy!", value: "joy" },
+                    { text: "No, it doesn't", value: "no-joy" },
+                    { text: "I'm not sure", value: "unsure" }
+                ]
+            },
+            {
+                question: "When was the last time you used this item?",
+                buttons: [
+                    { text: "Within the last month", value: "recent" },
+                    { text: "Within the last 6 months", value: "moderate" },
+                    { text: "Over a year ago", value: "old" },
+                    { text: "Never used it", value: "never" }
+                ]
+            },
+            {
+                question: "Imagine your ideal life. Does this item belong in it?",
+                buttons: [
+                    { text: "Absolutely yes", value: "yes" },
+                    { text: "Maybe", value: "maybe" },
+                    { text: "No", value: "no" }
+                ]
+            },
+            {
+                question: "If you let this go, would you buy it again?",
+                buttons: [
+                    { text: "Yes, immediately", value: "yes" },
+                    { text: "Maybe if needed", value: "maybe" },
+                    { text: "No", value: "no" }
+                ]
+            }
+        ];
+
+        // Initialize app
+        function init() {
+            // Check if already logged in
+            if (sessionStorage.getItem('authenticated') === 'true') {
+                showMainApp();
+            }
+        }
+
+        // Login function
+        function login() {
+            const passwordInput = document.getElementById('password');
+            const errorDiv = document.getElementById('loginError');
+            
+            if (passwordInput.value === PASSWORD) {
+                sessionStorage.setItem('authenticated', 'true');
+                showMainApp();
+            } else {
+                errorDiv.textContent = 'Incorrect password. Please try again.';
+                passwordInput.value = '';
+            }
+        }
+
+        // Show main app
+        function showMainApp() {
+            document.getElementById('loginScreen').classList.remove('active');
+            document.getElementById('mainApp').classList.add('active');
+            loadStats();
+            checkForExcessItems();
+        }
+
+        // Switch tabs
+        function switchTab(tab) {
+            // Update nav tabs
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update content
+            document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
+            
+            if (tab === 'addItem') {
+                document.getElementById('addItemTab').style.display = 'block';
+                checkForExcessItems();
+            } else if (tab === 'myItems') {
+                document.getElementById('myItemsTab').style.display = 'block';
+                displayItems();
+            } else if (tab === 'dashboard') {
+                document.getElementById('dashboardTab').style.display = 'block';
+                loadStats();
+            }
+        }
+
+        // Handle image upload
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    currentItem.image = e.target.result;
+                    document.getElementById('imagePreview').src = e.target.result;
+                    document.getElementById('imagePreview').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Start coaching process
+        function startCoaching() {
+            const category = document.getElementById('itemCategory').value;
+            const location = document.getElementById('itemLocation').value;
+            const description = document.getElementById('itemDescription').value;
+
+            if (!currentItem.image || !category || !location) {
+                alert('Please capture an image and fill in the category and location.');
+                return;
+            }
+
+            currentItem.category = category;
+            currentItem.location = location;
+            currentItem.description = description;
+
+            coachingStep = 0;
+            joyResponse = '';
+            document.getElementById('coachingSection').style.display = 'block';
+            document.getElementById('startCoaching').style.display = 'none';
+            showCoachingQuestion();
+        }
+
+        // Show coaching question
+        function showCoachingQuestion() {
+            if (coachingStep < coachingFlow.length) {
+                const step = coachingFlow[coachingStep];
+                document.getElementById('coachingQuestion').textContent = step.question;
+                
+                const buttonsHtml = step.buttons.map(btn => 
+                    `<button onclick="handleCoachingAnswer('${btn.value}')">${btn.text}</button>`
+                ).join('');
+                
+                document.getElementById('coachingButtons').innerHTML = buttonsHtml;
+            } else {
+                makeDecision();
+            }
+        }
+
+        // Handle coaching answer
+        function handleCoachingAnswer(answer) {
+            if (coachingStep === 0) {
+                joyResponse = answer;
+            }
+
+            // Early decision for clear cases
+            if (coachingStep === 0 && answer === 'joy') {
+                makeDecision('keep');
+                return;
+            }
+
+            if (coachingStep === 1 && answer === 'never') {
+                makeDecision('dispose');
+                return;
+            }
+
+            coachingStep++;
+            showCoachingQuestion();
+        }
+
+        // Make final decision
+        function makeDecision(forcedDecision = null) {
+            let decision = forcedDecision;
+            
+            if (!decision) {
+                // Decision logic based on responses
+                if (joyResponse === 'joy') {
+                    decision = 'keep';
+                } else if (joyResponse === 'no-joy') {
+                    decision = 'dispose';
+                } else {
+                    // More complex decision for unsure cases
+                    decision = 'review'; // Will prompt for manual decision
+                }
+            }
+
+            if (decision === 'review') {
+                showManualDecision();
+            } else {
+                finalizeDecision(decision);
+            }
+        }
+
+        // Show manual decision options
+        function showManualDecision() {
+            const html = `
+                <div class="coaching-card">
+                    <div class="coaching-question">Based on your responses, what would you like to do with this item?</div>
+                    <button onclick="finalizeDecision('keep')">Keep it</button>
+                    <button onclick="finalizeDecision('dispose')">Dispose/Donate it</button>
+                    <button onclick="finalizeDecision('move-hy')">Move to HY's Home</button>
+                    <button onclick="finalizeDecision('move-office')">Move to Office</button>
+                </div>
+            `;
+            document.getElementById('coachingSection').innerHTML = html;
+        }
+
+        // Finalize decision
+        function finalizeDecision(decision) {
+            currentItem.decision = decision;
+            currentItem.timestamp = new Date().toISOString();
+
+            // Save item
+            saveItem(currentItem);
+
+            // Show success message
+            let message = '';
+            switch(decision) {
+                case 'keep':
+                    message = "✨ Great! This item sparks joy and stays with you.";
+                    break;
+                case 'dispose':
+                    message = "🌱 Thank this item for its service, then let it go with gratitude.";
+                    break;
+                case 'move-hy':
+                    message = "📦 This item will find its place at HY's Home.";
+                    break;
+                case 'move-office':
+                    message = "💼 This item will be moved to your office.";
+                    break;
+            }
+
+            alert(message);
+            resetForm();
+        }
+
+        // Save item to localStorage
+        function saveItem(item) {
+            let items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            items.push(item);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+        }
+
+        // Reset form
+        function resetForm() {
+            currentItem = {
+                image: null,
+                category: '',
+                location: '',
+                description: '',
+                decision: '',
+                timestamp: null
+            };
+            
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('imageInput').value = '';
+            document.getElementById('itemCategory').value = '';
+            document.getElementById('itemLocation').value = '';
+            document.getElementById('itemDescription').value = '';
+            document.getElementById('coachingSection').style.display = 'none';
+            document.getElementById('startCoaching').style.display = 'block';
+            
+            checkForExcessItems();
+        }
+
+        // Check for excess items
+        function checkForExcessItems() {
+            const items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            const categoryCounts = {};
+            
+            items.forEach(item => {
+                if (item.decision === 'keep') {
+                    categoryCounts[item.category] = (categoryCounts[item.category] || 0) + 1;
+                }
+            });
+
+            const alerts = [];
+            for (const [category, count] of Object.entries(categoryCounts)) {
+                if (count >= MAX_ITEMS_PER_CATEGORY) {
+                    alerts.push(`You have ${count} ${category} items. Consider reviewing if you need them all.`);
+                }
+            }
+
+            const alertSection = document.getElementById('alertSection');
+            if (alerts.length > 0) {
+                alertSection.innerHTML = `
+                    <div class="alert">
+                        <div class="alert-title">🤖 AI Analysis Alert</div>
+                        ${alerts.join('<br>')}
+                    </div>
+                `;
+            } else {
+                alertSection.innerHTML = '';
+            }
+        }
+
+        // Display items
+        function displayItems() {
+            const items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            const filter = document.getElementById('filterCategory').value;
+            const grid = document.getElementById('itemsGrid');
+            
+            const filteredItems = filter === 'all' 
+                ? items 
+                : items.filter(item => item.category === filter);
+
+            if (filteredItems.length === 0) {
+                grid.innerHTML = '<p>No items found.</p>';
+                return;
+            }
+
+            grid.innerHTML = filteredItems.map((item, index) => `
+                <div class="item-card">
+                    <img src="${item.image}" alt="Item" class="item-image">
+                    <div class="item-info">
+                        <div class="item-category">${item.category}</div>
+                        <div class="item-location">📍 ${item.location}</div>
+                        <div class="item-decision decision-${item.decision.split('-')[0]}">${item.decision.replace('-', ' ')}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Load statistics
+        function loadStats() {
+            const items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            
+            const stats = {
+                total: items.length,
+                kept: items.filter(i => i.decision === 'keep').length,
+                disposed: items.filter(i => i.decision === 'dispose').length,
+                moved: items.filter(i => i.decision.startsWith('move')).length
+            };
+
+            document.getElementById('totalItems').textContent = stats.total;
+            document.getElementById('itemsKept').textContent = stats.kept;
+            document.getElementById('itemsDisposed').textContent = stats.disposed;
+            document.getElementById('itemsMoved').textContent = stats.moved;
+        }
+
+        // Export data
+        function exportData() {
+            const items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            const dataStr = JSON.stringify(items, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `curator-ai-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+        }
+
+        // Clear all data
+        function clearAllData() {
+            if (confirm('Are you sure you want to clear all data? This cannot be undone.')) {
+                localStorage.removeItem(STORAGE_KEY);
+                alert('All data has been cleared.');
+                loadStats();
+                displayItems();
+            }
+        }
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>
