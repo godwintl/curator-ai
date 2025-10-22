@@ -380,6 +380,118 @@
             display: block;
         }
 
+        /* Password Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.hidden {
+            display: none;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 0;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #42A5F5 0%, #1E88E5 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px 20px 0 0;
+            text-align: center;
+        }
+
+        .lock-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .modal-header h2 {
+            margin: 0 0 10px 0;
+            font-size: 24px;
+        }
+
+        .modal-header p {
+            margin: 0;
+            opacity: 0.95;
+            font-size: 14px;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-body input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #E3F2FD;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .modal-body button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #42A5F5 0%, #2196F3 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-body button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(33, 150, 243, 0.3);
+        }
+
+        .error-msg {
+            color: #D32F2F;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+            min-height: 20px;
+        }
+
+        .app-content {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         /* Responsive */
         @media (max-width: 480px) {
             .items-grid {
@@ -396,19 +508,30 @@
         </div>
 
         <div class="content">
-            <!-- Login Screen -->
-            <div id="loginScreen" class="screen active">
-                <div class="login-icon">🔐</div>
-                <div class="input-group" style="max-width: 300px;">
-                    <label for="password">Enter Password</label>
-                    <input type="password" id="password" placeholder="Enter your password">
-                    <div id="loginError" class="error"></div>
-                    <button onclick="login()">Login</button>
+            <!-- Password Modal Overlay -->
+            <div id="passwordModal" class="modal-overlay">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="lock-icon">🔒</div>
+                        <h2>This App is Protected</h2>
+                        <p>Please enter the password to continue</p>
+                    </div>
+                    <div class="modal-body">
+                        <input type="password" 
+                               id="passwordInput" 
+                               placeholder="Enter password"
+                               autocomplete="off"
+                               autocorrect="off"
+                               autocapitalize="off"
+                               spellcheck="false">
+                        <button onclick="checkPassword()">Unlock</button>
+                        <div id="errorMessage" class="error-msg"></div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Main App -->
-            <div id="mainApp" class="screen">
+            <!-- Main App (Hidden until password is correct) -->
+            <div id="mainApp" class="app-content" style="display: none;">
                 <div class="nav-tabs">
                     <button class="nav-tab active" onclick="switchTab('addItem')">Add Item</button>
                     <button class="nav-tab" onclick="switchTab('myItems')">My Items</button>
@@ -527,6 +650,10 @@
         const MAX_ITEMS_PER_CATEGORY = 10;
 
         // State
+        let attempts = 0;
+        const MAX_ATTEMPTS = 5;
+
+        // State
         let currentItem = {
             image: null,
             category: '',
@@ -576,35 +703,86 @@
             }
         ];
 
+        // Check password
+        function checkPassword() {
+            const passwordInput = document.getElementById('passwordInput');
+            const errorMsg = document.getElementById('errorMessage');
+            const enteredPassword = passwordInput.value.trim();
+            
+            if (enteredPassword === PASSWORD) {
+                // Correct password
+                localStorage.setItem('curatorAIAuth', 'true');
+                sessionStorage.setItem('authenticated', 'true');
+                
+                // Hide modal and show app
+                document.getElementById('passwordModal').classList.add('hidden');
+                document.getElementById('mainApp').style.display = 'block';
+                
+                // Clear password field
+                passwordInput.value = '';
+                
+                // Initialize app
+                loadStats();
+                checkForExcessItems();
+            } else {
+                // Wrong password
+                attempts++;
+                passwordInput.value = '';
+                
+                if (attempts >= MAX_ATTEMPTS) {
+                    errorMsg.textContent = `Too many incorrect attempts. Please refresh the page.`;
+                    passwordInput.disabled = true;
+                    document.querySelector('.modal-body button').disabled = true;
+                } else {
+                    errorMsg.textContent = `Incorrect password. ${MAX_ATTEMPTS - attempts} attempts remaining.`;
+                }
+                
+                // Shake animation
+                document.querySelector('.modal-content').style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    document.querySelector('.modal-content').style.animation = '';
+                }, 500);
+            }
+        }
+
         // Initialize app
         function init() {
-            // Check if already logged in
-            if (sessionStorage.getItem('authenticated') === 'true') {
-                showMainApp();
+            // Check if already authenticated
+            if (sessionStorage.getItem('authenticated') === 'true' || 
+                localStorage.getItem('curatorAIAuth') === 'true') {
+                document.getElementById('passwordModal').classList.add('hidden');
+                document.getElementById('mainApp').style.display = 'block';
+                loadStats();
+                checkForExcessItems();
             }
-        }
-
-        // Login function
-        function login() {
-            const passwordInput = document.getElementById('password');
-            const errorDiv = document.getElementById('loginError');
             
-            if (passwordInput.value === PASSWORD) {
-                sessionStorage.setItem('authenticated', 'true');
-                showMainApp();
-            } else {
-                errorDiv.textContent = 'Incorrect password. Please try again.';
-                passwordInput.value = '';
+            // Add enter key support for password field
+            const passwordInput = document.getElementById('passwordInput');
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', function(event) {
+                    if (event.key === 'Enter') {
+                        event.preventDefault();
+                        checkPassword();
+                    }
+                });
+                
+                // Auto-focus password field
+                setTimeout(() => {
+                    passwordInput.focus();
+                }, 300);
             }
         }
 
-        // Show main app
-        function showMainApp() {
-            document.getElementById('loginScreen').classList.remove('active');
-            document.getElementById('mainApp').classList.add('active');
-            loadStats();
-            checkForExcessItems();
-        }
+        // Add shake animation to CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-10px); }
+                75% { transform: translateX(10px); }
+            }
+        `;
+        document.head.appendChild(style);
 
         // Switch tabs
         function switchTab(tab) {
@@ -893,7 +1071,19 @@
         }
 
         // Initialize on load
-        init();
+        document.addEventListener('DOMContentLoaded', init);
+        
+        // Also try to initialize if DOM is already loaded
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            init();
+        }
+        
+        // Logout function (optional - can add a button for this)
+        function logout() {
+            sessionStorage.removeItem('authenticated');
+            localStorage.removeItem('curatorAIAuth');
+            location.reload();
+        }
     </script>
 </body>
 </html>
