@@ -118,6 +118,10 @@
             transition: all 0.3s ease;
             width: 100%;
             margin-top: 10px;
+            position: relative;
+            z-index: 10;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
 
         button:hover {
@@ -582,10 +586,13 @@
                         <input type="text" id="itemDescription" placeholder="e.g., Blue winter jacket">
                     </div>
 
-                    <div id="coachingSection" style="display: none;">
+                    <div id="coachingSection" style="display: none; position: relative; z-index: 10;">
                         <div class="coaching-card">
                             <div class="coaching-question" id="coachingQuestion"></div>
-                            <div id="coachingButtons"></div>
+                            <div id="coachingButtons" style="display: flex; flex-direction: column; gap: 10px;"></div>
+                            <button onclick="resetCoaching()" style="background: #FF5252; margin-top: 20px; font-size: 14px;">
+                                Reset Process
+                            </button>
                         </div>
                     </div>
 
@@ -848,10 +855,13 @@
                 document.getElementById('coachingQuestion').textContent = step.question;
                 
                 const buttonsHtml = step.buttons.map(btn => 
-                    `<button onclick="handleCoachingAnswer('${btn.value}')">${btn.text}</button>`
+                    `<button onclick="handleCoachingAnswer('${btn.value}')" style="margin: 5px;">${btn.text}</button>`
                 ).join('');
                 
                 document.getElementById('coachingButtons').innerHTML = buttonsHtml;
+                
+                // Make sure the coaching section is visible
+                document.getElementById('coachingSection').style.display = 'block';
             } else {
                 makeDecision();
             }
@@ -859,6 +869,8 @@
 
         // Handle coaching answer
         function handleCoachingAnswer(answer) {
+            console.log('Answer clicked:', answer); // Debug log
+            
             if (coachingStep === 0) {
                 joyResponse = answer;
             }
@@ -874,8 +886,14 @@
                 return;
             }
 
+            // Move to next question
             coachingStep++;
-            showCoachingQuestion();
+            
+            if (coachingStep < coachingFlow.length) {
+                showCoachingQuestion();
+            } else {
+                makeDecision();
+            }
         }
 
         // Make final decision
@@ -949,6 +967,16 @@
             let items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
             items.push(item);
             localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+        }
+
+        // Reset coaching process
+        function resetCoaching() {
+            coachingStep = 0;
+            joyResponse = '';
+            document.getElementById('coachingSection').style.display = 'none';
+            document.getElementById('startCoaching').style.display = 'block';
+            document.getElementById('coachingButtons').innerHTML = '';
+            document.getElementById('coachingQuestion').textContent = '';
         }
 
         // Reset form
@@ -1070,6 +1098,17 @@
             }
         }
 
+        // Make functions globally accessible
+        window.handleCoachingAnswer = handleCoachingAnswer;
+        window.startCoaching = startCoaching;
+        window.resetCoaching = resetCoaching;
+        window.checkPassword = checkPassword;
+        window.switchTab = switchTab;
+        window.exportData = exportData;
+        window.clearAllData = clearAllData;
+        window.displayItems = displayItems;
+        window.finalizeDecision = finalizeDecision;
+        
         // Initialize on load
         document.addEventListener('DOMContentLoaded', init);
         
