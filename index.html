@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Curator AI - Intelligent Life Organization</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Curator AI - Unlimited Storage</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 50%, #90CAF9 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #E3F2FD 0%, #90CAF9 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -38,19 +40,19 @@
         .header h1 {
             font-size: 26px;
             margin-bottom: 10px;
-            font-weight: 600;
         }
 
-        .header p {
-            opacity: 0.95;
-            font-size: 14px;
+        .storage-info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 11px;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 8px;
+            border-radius: 10px;
         }
 
-        .content {
-            padding: 20px;
-        }
-
-        /* Items Counter Badge */
         .items-counter {
             position: absolute;
             top: 20px;
@@ -61,7 +63,10 @@
             border-radius: 20px;
             font-weight: bold;
             font-size: 14px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .content {
+            padding: 20px;
         }
 
         /* Password Modal */
@@ -87,7 +92,6 @@
             border-radius: 20px;
             width: 90%;
             max-width: 400px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
         .modal-header {
@@ -111,7 +115,7 @@
             margin-bottom: 15px;
         }
 
-        .modal-body button {
+        button {
             width: 100%;
             padding: 15px;
             background: linear-gradient(135deg, #42A5F5 0%, #2196F3 100%);
@@ -121,6 +125,7 @@
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
+            -webkit-appearance: none;
         }
 
         /* Navigation */
@@ -132,14 +137,13 @@
         }
 
         .nav-tab {
-            padding: 12px 24px;
+            flex: 1;
+            padding: 12px;
             background: none;
             border: none;
             color: #90A4AE;
-            cursor: pointer;
             border-bottom: 3px solid transparent;
             margin-bottom: -2px;
-            font-weight: 500;
         }
 
         .nav-tab.active {
@@ -147,7 +151,7 @@
             border-bottom-color: #2196F3;
         }
 
-        /* Form Elements */
+        /* Form */
         .input-group {
             margin-bottom: 20px;
         }
@@ -165,48 +169,9 @@
             border: 2px solid #e0e0e0;
             border-radius: 10px;
             font-size: 16px;
+            -webkit-appearance: none;
         }
 
-        input:focus, select:focus {
-            outline: none;
-            border-color: #42A5F5;
-        }
-
-        /* Buttons */
-        .btn {
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            border: none;
-            width: 100%;
-            margin-top: 10px;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #42A5F5 0%, #2196F3 100%);
-            color: white;
-        }
-
-        .btn-secondary {
-            background: linear-gradient(135deg, #F5F5F5 0%, #E3F2FD 100%);
-            color: #1976D2;
-        }
-
-        .btn-danger {
-            background: #FF5252;
-            color: white;
-        }
-
-        .btn-success {
-            background: #4CAF50;
-            color: white;
-        }
-
-        /* Image Capture */
         .capture-btn {
             background: linear-gradient(135deg, #E3F2FD 0%, #F5F5F5 100%);
             color: #1976D2;
@@ -227,7 +192,7 @@
             display: none;
         }
 
-        /* Coaching Section */
+        /* Coaching */
         .coaching-card {
             background: linear-gradient(135deg, #F5F5F5 0%, #E3F2FD 100%);
             border-radius: 15px;
@@ -239,7 +204,6 @@
             font-size: 18px;
             color: #1565C0;
             margin-bottom: 20px;
-            font-weight: 500;
             text-align: center;
         }
 
@@ -253,15 +217,13 @@
             border: none;
             border-radius: 25px;
             font-size: 16px;
-            cursor: pointer;
         }
 
-        /* Decision Result */
+        /* Decision */
         .decision-card {
             background: linear-gradient(135deg, #C8E6C9 0%, #A5D6A7 100%);
             border-radius: 15px;
             padding: 25px;
-            margin: 20px 0;
             text-align: center;
         }
 
@@ -277,20 +239,16 @@
             margin-bottom: 10px;
         }
 
-        .decision-message {
-            color: #2E7D32;
-            margin-bottom: 20px;
+        .btn-success {
+            background: #4CAF50;
         }
 
-        /* Storage Warning */
-        .storage-warning {
-            background: #FFF3E0;
-            border: 1px solid #FFB74D;
-            color: #E65100;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            text-align: center;
+        .btn-secondary {
+            background: #90A4AE;
+        }
+
+        .btn-danger {
+            background: #FF5252;
         }
 
         /* Items Grid */
@@ -340,6 +298,49 @@
         .decision-move-hy { background: #B3E5FC; color: #01579B; }
         .decision-move-office { background: #D1C4E9; color: #4527A0; }
 
+        /* Stats */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1976D2;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #607D8B;
+            margin-top: 5px;
+        }
+
+        .success-badge {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #90A4AE;
+        }
+
         .tab-content {
             display: none;
         }
@@ -351,14 +352,35 @@
         #imageInput {
             display: none;
         }
+
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .page-btn {
+            display: inline-block;
+            padding: 8px 12px;
+            margin: 0 5px;
+            background: #E3F2FD;
+            color: #1976D2;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .page-btn.active {
+            background: #1976D2;
+            color: white;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
+            <div class="storage-info">IndexedDB: Unlimited</div>
             <div class="items-counter" id="itemsCounter">0 items</div>
             <h1>🤖 Curator AI</h1>
-            <p>Intelligent decisions for intentional living</p>
+            <p>Handles thousands of items!</p>
         </div>
 
         <div class="content">
@@ -387,62 +409,60 @@
             <!-- Main App -->
             <div id="mainApp" style="display: none;">
                 <div class="nav-tabs">
-                    <button class="nav-tab active" onclick="switchTab(event, 'addItem')">Add Item</button>
-                    <button class="nav-tab" onclick="switchTab(event, 'myItems')">My Items</button>
-                    <button class="nav-tab" onclick="switchTab(event, 'summary')">Summary</button>
-                </div>
-
-                <!-- Storage Warning -->
-                <div id="storageWarning" class="storage-warning" style="display: none;">
-                    ⚠️ Storage is getting full. Consider exporting your data.
+                    <button class="nav-tab active" onclick="switchTab(event, 'addItem')">Add</button>
+                    <button class="nav-tab" onclick="switchTab(event, 'myItems')">Items</button>
+                    <button class="nav-tab" onclick="switchTab(event, 'summary')">Stats</button>
                 </div>
 
                 <!-- Add Item Tab -->
                 <div id="addItem" class="tab-content active">
                     <div class="capture-btn" onclick="document.getElementById('imageInput').click()">
                         <div style="font-size: 40px;">📸</div>
-                        <div>Click to capture or upload image</div>
+                        <div>Tap to capture photo</div>
                     </div>
-                    <input type="file" id="imageInput" accept="image/*" onchange="handleImageUpload(event)">
-                    <img id="imagePreview" alt="Item preview">
+                    <input type="file" id="imageInput" accept="image/*" capture="environment" onchange="handleImageUpload(event)">
+                    <img id="imagePreview">
 
                     <div class="input-group">
-                        <label>What type of item is this?</label>
+                        <label>Category</label>
                         <select id="itemCategory">
-                            <option value="">Select category...</option>
+                            <option value="">Select...</option>
                             <option value="clothing">Clothing</option>
                             <option value="books">Books</option>
                             <option value="electronics">Electronics</option>
-                            <option value="kitchen">Kitchen Items</option>
+                            <option value="kitchen">Kitchen</option>
                             <option value="decor">Decor</option>
                             <option value="documents">Documents</option>
                             <option value="toys">Toys</option>
                             <option value="accessories">Accessories</option>
+                            <option value="furniture">Furniture</option>
+                            <option value="sports">Sports</option>
+                            <option value="tools">Tools</option>
                             <option value="other">Other</option>
                         </select>
                     </div>
 
                     <div class="input-group">
-                        <label>Where did you find this?</label>
+                        <label>Location</label>
                         <select id="itemLocation">
-                            <option value="">Select location...</option>
+                            <option value="">Select...</option>
                             <option value="home">Home</option>
                             <option value="hy-home">HY's Home</option>
                             <option value="office">Office</option>
                             <option value="storage">Storage</option>
-                            <option value="other">Other</option>
+                            <option value="garage">Garage</option>
+                            <option value="attic">Attic</option>
+                            <option value="basement">Basement</option>
                         </select>
                     </div>
 
                     <div class="input-group">
-                        <label>Brief description (optional)</label>
-                        <input type="text" id="itemDescription" placeholder="e.g., Blue winter jacket">
+                        <label>Description</label>
+                        <input type="text" id="itemDescription" placeholder="Optional">
                     </div>
 
                     <div id="startSection">
-                        <button class="btn btn-primary" onclick="startProcess()">
-                            Start Decision Process
-                        </button>
+                        <button onclick="startProcess()">Start Decision Process</button>
                     </div>
 
                     <div id="coachingSection" style="display: none;"></div>
@@ -451,12 +471,59 @@
 
                 <!-- My Items Tab -->
                 <div id="myItems" class="tab-content">
+                    <div class="input-group">
+                        <select id="filterCategory" onchange="displayItems()">
+                            <option value="all">All Categories</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="books">Books</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="kitchen">Kitchen</option>
+                            <option value="decor">Decor</option>
+                            <option value="documents">Documents</option>
+                            <option value="toys">Toys</option>
+                            <option value="accessories">Accessories</option>
+                            <option value="furniture">Furniture</option>
+                            <option value="sports">Sports</option>
+                            <option value="tools">Tools</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
                     <div id="itemsGrid" class="items-grid"></div>
+                    <div id="pagination" class="pagination"></div>
                 </div>
 
                 <!-- Summary Tab -->
                 <div id="summary" class="tab-content">
-                    <p>Summary content will go here</p>
+                    <div class="stat-grid">
+                        <div class="stat-box">
+                            <div class="stat-number" id="totalStat">0</div>
+                            <div class="stat-label">Total Items</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number" id="keptStat">0</div>
+                            <div class="stat-label">Items Kept</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number" id="disposedStat">0</div>
+                            <div class="stat-label">Items Disposed</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number" id="movedStat">0</div>
+                            <div class="stat-label">Items Moved</div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <div class="success-badge">
+                            🎯 Can store 1000s of items!
+                        </div>
+                    </div>
+                    
+                    <button onclick="exportData()" style="margin-bottom: 10px;">Export All Data</button>
+                    <button onclick="importData()" style="background: #4CAF50; margin-bottom: 10px;">Import Data</button>
+                    <button onclick="clearData()" style="background: #FF5252;">Clear All Data</button>
+                    
+                    <input type="file" id="importFile" accept=".json" style="display: none;" onchange="handleImport(event)">
                 </div>
             </div>
         </div>
@@ -465,74 +532,61 @@
     <script>
         // Constants
         const PASSWORD = 'GTL1990';
-        const STORAGE_KEY = 'curatorAIItems';
+        const DB_NAME = 'CuratorAI';
+        const DB_VERSION = 1;
+        const STORE_NAME = 'items';
+        const ITEMS_PER_PAGE = 20;
         
-        // Global state
-        let currentItem = {
-            image: null,
-            category: '',
-            location: '',
-            description: '',
-            decision: ''
-        };
+        // Database reference
+        let db = null;
+        let currentPage = 1;
         
-        let currentStep = 0;
-        let answers = [];
-        
-        // Coaching questions
-        const questions = [
-            {
-                text: "Pick up this item. Does it spark joy? ✨",
-                options: ["Yes, it sparks joy!", "No, it doesn't", "I'm not sure"]
-            },
-            {
-                text: "When was the last time you used this item?",
-                options: ["Within the last month", "Within 6 months", "Over a year ago"]
-            },
-            {
-                text: "If you let this go, would you buy it again?",
-                options: ["Yes, immediately", "Maybe if needed", "No"]
-            }
-        ];
-
-        // Check localStorage availability
-        function isLocalStorageAvailable() {
-            try {
-                const test = '__localStorage_test__';
-                localStorage.setItem(test, test);
-                localStorage.removeItem(test);
-                return true;
-            } catch (e) {
-                return false;
-            }
+        // Initialize IndexedDB
+        async function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+                
+                request.onerror = () => {
+                    console.error('Database error:', request.error);
+                    reject(request.error);
+                };
+                
+                request.onsuccess = () => {
+                    db = request.result;
+                    console.log('Database opened successfully');
+                    resolve(db);
+                };
+                
+                request.onupgradeneeded = (event) => {
+                    db = event.target.result;
+                    
+                    // Create object store if it doesn't exist
+                    if (!db.objectStoreNames.contains(STORE_NAME)) {
+                        const objectStore = db.createObjectStore(STORE_NAME, { 
+                            keyPath: 'id', 
+                            autoIncrement: true 
+                        });
+                        
+                        // Create indexes
+                        objectStore.createIndex('category', 'category', { unique: false });
+                        objectStore.createIndex('decision', 'decision', { unique: false });
+                        objectStore.createIndex('timestamp', 'timestamp', { unique: false });
+                    }
+                };
+            });
         }
-
-        // Check storage space
-        function checkStorageSpace() {
-            try {
-                const used = new Blob(Object.values(localStorage)).size;
-                const estimatedMax = 5 * 1024 * 1024; // 5MB estimate
-                if (used > estimatedMax * 0.8) {
-                    document.getElementById('storageWarning').style.display = 'block';
-                    return false;
-                }
-                return true;
-            } catch (e) {
-                return true; // Assume it's okay if we can't check
-            }
-        }
-
-        // Compress image
+        
+        // Compress image more aggressively
         function compressImage(dataUrl, callback) {
             const img = new Image();
             img.onload = function() {
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
                 
-                // Set maximum dimensions
+                // Even smaller for IndexedDB
                 let width = img.width;
                 let height = img.height;
-                const maxSize = 400;
+                const maxSize = 300;
                 
                 if (width > height) {
                     if (width > maxSize) {
@@ -548,59 +602,72 @@
                 
                 canvas.width = width;
                 canvas.height = height;
-                
                 ctx.drawImage(img, 0, 0, width, height);
                 
-                // Convert to compressed JPEG
-                const compressed = canvas.toDataURL('image/jpeg', 0.6);
+                // Very compressed JPEG
+                const compressed = canvas.toDataURL('image/jpeg', 0.5);
                 callback(compressed);
             };
             img.src = dataUrl;
         }
+        
+        // Global state
+        let currentItem = {};
+        let currentStep = 0;
+        let answers = [];
+        
+        // Questions
+        const questions = [
+            {
+                text: "Does this spark joy? ✨",
+                options: ["Yes, it sparks joy!", "No, it doesn't", "I'm not sure"]
+            },
+            {
+                text: "When did you last use it?",
+                options: ["Within the last month", "Within 6 months", "Over a year ago"]
+            },
+            {
+                text: "Would you buy it again?",
+                options: ["Yes, immediately", "Maybe if needed", "No"]
+            }
+        ];
 
         // Password check
         function checkPassword() {
             const input = document.getElementById('passwordInput');
-            const error = document.getElementById('errorMessage');
-            
             if (input.value === PASSWORD) {
                 document.getElementById('passwordModal').classList.add('hidden');
                 document.getElementById('mainApp').style.display = 'block';
-                
-                try {
-                    localStorage.setItem('curatorAIAuth', 'true');
-                } catch (e) {
-                    console.log('Cannot save auth state');
-                }
-                
-                updateItemsCounter();
-                checkStorageSpace();
+                updateCounter();
+                updateStats();
             } else {
-                error.textContent = 'Incorrect password. Please try again.';
+                document.getElementById('errorMessage').textContent = 'Incorrect password';
                 input.value = '';
             }
         }
 
         // Tab switching
-        function switchTab(event, tabName) {
+        function switchTab(event, tab) {
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
             
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.getElementById(tabName).classList.add('active');
+            document.getElementById(tab).classList.add('active');
             
-            if (tabName === 'myItems') {
+            if (tab === 'myItems') {
+                currentPage = 1;
                 displayItems();
+            } else if (tab === 'summary') {
+                updateStats();
             }
         }
 
-        // Handle image upload with compression
+        // Handle image upload
         function handleImageUpload(event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    // Compress the image before storing
                     compressImage(e.target.result, function(compressed) {
                         currentItem.image = compressed;
                         document.getElementById('imagePreview').src = compressed;
@@ -611,13 +678,13 @@
             }
         }
 
-        // Start the process
+        // Start process
         function startProcess() {
             const category = document.getElementById('itemCategory').value;
             const location = document.getElementById('itemLocation').value;
             
             if (!currentItem.image || !category || !location) {
-                alert('Please capture an image and fill in the category and location.');
+                alert('Please add photo, category, and location.');
                 return;
             }
             
@@ -634,144 +701,107 @@
             showQuestion();
         }
 
-        // Show current question
+        // Show question
         function showQuestion() {
             if (currentStep < questions.length) {
                 const q = questions[currentStep];
-                const html = `
+                document.getElementById('coachingSection').innerHTML = `
                     <div class="coaching-card">
                         <div class="coaching-question">${q.text}</div>
                         ${q.options.map((opt, i) => 
                             `<button class="coaching-btn" onclick="answerQuestion(${i})">${opt}</button>`
                         ).join('')}
-                        <button class="btn btn-danger" onclick="resetProcess()">Reset Process</button>
+                        <button class="btn-danger" onclick="resetProcess()">Reset</button>
                     </div>
                 `;
-                document.getElementById('coachingSection').innerHTML = html;
             } else {
                 showDecision();
             }
         }
 
-        // Handle answer
-        function answerQuestion(answerIndex) {
-            answers.push(answerIndex);
+        // Answer question
+        function answerQuestion(index) {
+            answers.push(index);
             currentStep++;
             showQuestion();
         }
 
-        // Show final decision
+        // Show decision
         function showDecision() {
-            let decision = '';
-            let icon = '';
-            let message = '';
+            let decision = 'keep';
+            let icon = '💭';
+            let message = 'Consider keeping this for now';
             
-            const joyAnswer = answers[0];
-            const useAnswer = answers[1];
-            const buyAnswer = answers[2];
+            const [joy, use, buy] = answers;
             
-            if (joyAnswer === 0 && useAnswer === 0) {
+            if (joy === 0 && use === 0) {
                 decision = 'keep';
                 icon = '✅';
-                message = 'This item sparks joy and you use it regularly. Keep it!';
-            } else if (joyAnswer === 1 || (useAnswer === 2 && buyAnswer === 2)) {
+                message = 'This sparks joy and you use it!';
+            } else if (joy === 1 || (use === 2 && buy === 2)) {
                 decision = 'dispose';
                 icon = '🗑️';
-                message = 'Thank this item for its service, then let it go with gratitude.';
-            } else if (currentItem.location !== 'hy-home' && useAnswer === 2) {
+                message = 'Thank it and let it go';
+            } else if (use === 2 && currentItem.location === 'home') {
                 decision = 'move-hy';
                 icon = '📦';
-                message = "This item might be useful at HY's Home.";
-            } else if (currentItem.location !== 'office' && currentItem.category === 'documents') {
+                message = 'Move to HY\'s home';
+            } else if (currentItem.category === 'documents' && currentItem.location !== 'office') {
                 decision = 'move-office';
                 icon = '💼';
-                message = 'This item belongs at your office.';
-            } else {
-                decision = 'keep';
-                icon = '💭';
-                message = 'Consider keeping this for now and review again later.';
+                message = 'Move to office';
             }
             
             currentItem.decision = decision;
             
-            const html = `
-                <div class="decision-card">
-                    <div class="decision-icon">${icon}</div>
-                    <div class="decision-text">Recommendation: ${decision.replace('-', ' to ').toUpperCase()}</div>
-                    <div class="decision-message">${message}</div>
-                    <button class="btn btn-success" onclick="saveDecision()">Save Decision</button>
-                    <button class="btn btn-secondary" onclick="resetProcess()">Start Over</button>
-                </div>
-            `;
-            
             document.getElementById('coachingSection').style.display = 'none';
             document.getElementById('decisionSection').style.display = 'block';
-            document.getElementById('decisionSection').innerHTML = html;
+            document.getElementById('decisionSection').innerHTML = `
+                <div class="decision-card">
+                    <div class="decision-icon">${icon}</div>
+                    <div class="decision-text">${decision.toUpperCase()}</div>
+                    <div>${message}</div>
+                    <button class="btn-success" onclick="saveItem()" style="margin-top: 20px;">Save Decision</button>
+                    <button class="btn-secondary" onclick="resetProcess()" style="margin-top: 10px;">Start Over</button>
+                </div>
+            `;
         }
 
-        // Save decision with better error handling
-        function saveDecision() {
-            if (!isLocalStorageAvailable()) {
-                alert('Storage is not available. Please check your browser settings or try using regular browsing mode (not private/incognito).');
+        // Save item to IndexedDB
+        async function saveItem() {
+            if (!db) {
+                alert('Database not ready. Please refresh the page.');
                 return;
             }
             
             try {
                 currentItem.timestamp = new Date().toISOString();
-                currentItem.id = Date.now(); // Add unique ID
                 
-                // Get existing items
-                let items = [];
-                try {
-                    const stored = localStorage.getItem(STORAGE_KEY);
-                    if (stored) {
-                        items = JSON.parse(stored);
-                    }
-                } catch (parseError) {
-                    console.error('Error parsing stored items:', parseError);
-                    items = [];
-                }
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
                 
-                // Add new item
-                items.push(currentItem);
+                const request = store.add(currentItem);
                 
-                // Try to save
-                const dataStr = JSON.stringify(items);
+                request.onsuccess = () => {
+                    alert('Item saved successfully! 🎉');
+                    resetProcess();
+                    updateCounter();
+                };
                 
-                // Check size before saving
-                if (dataStr.length > 4 * 1024 * 1024) { // 4MB limit
-                    alert('Storage limit reached. Please export your data and clear some items.');
-                    return;
-                }
-                
-                localStorage.setItem(STORAGE_KEY, dataStr);
-                
-                alert('Item saved successfully!');
-                resetProcess();
-                updateItemsCounter();
-                checkStorageSpace();
+                request.onerror = () => {
+                    console.error('Save error:', request.error);
+                    alert('Error saving item. Please try again.');
+                };
                 
             } catch (error) {
                 console.error('Save error:', error);
-                
-                if (error.name === 'QuotaExceededError') {
-                    alert('Storage is full. Please export your data and clear some items.');
-                } else {
-                    alert('Unable to save. Try clearing your browser cache or using a different browser.');
-                }
+                alert('Unable to save. Please try again.');
             }
         }
 
         // Reset process
         function resetProcess() {
-            currentItem = {
-                image: null,
-                category: '',
-                location: '',
-                description: '',
-                decision: ''
-            };
-            
+            currentItem = {};
             currentStep = 0;
             answers = [];
             
@@ -786,75 +816,191 @@
             document.getElementById('decisionSection').style.display = 'none';
         }
 
-        // Display items
-        function displayItems() {
-            try {
-                const items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        // Display items with pagination
+        async function displayItems() {
+            if (!db) return;
+            
+            const filter = document.getElementById('filterCategory').value;
+            const transaction = db.transaction([STORE_NAME], 'readonly');
+            const store = transaction.objectStore(STORE_NAME);
+            
+            const request = filter === 'all' 
+                ? store.getAll() 
+                : store.index('category').getAll(filter);
+            
+            request.onsuccess = () => {
+                const items = request.result;
+                const totalPages = Math.ceil(items.length / ITEMS_PER_PAGE);
+                const start = (currentPage - 1) * ITEMS_PER_PAGE;
+                const end = start + ITEMS_PER_PAGE;
+                const pageItems = items.slice(start, end);
+                
                 const grid = document.getElementById('itemsGrid');
                 
-                if (items.length === 0) {
-                    grid.innerHTML = '<p>No items found.</p>';
+                if (pageItems.length === 0) {
+                    grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">No items found</p>';
+                    document.getElementById('pagination').innerHTML = '';
                     return;
                 }
                 
-                grid.innerHTML = items.map(item => `
+                grid.innerHTML = pageItems.map(item => `
                     <div class="item-card">
-                        <img src="${item.image}" alt="Item" class="item-image">
+                        <img src="${item.image}" class="item-image">
                         <div class="item-info">
                             <div class="item-category">${item.category}</div>
-                            <div class="item-decision decision-${item.decision}">
-                                ${item.decision.replace('-', ' ')}
-                            </div>
+                            <div class="item-decision decision-${item.decision}">${item.decision}</div>
                         </div>
                     </div>
                 `).join('');
-            } catch (error) {
-                document.getElementById('itemsGrid').innerHTML = '<p>Unable to load items.</p>';
-            }
+                
+                // Pagination
+                if (totalPages > 1) {
+                    let paginationHtml = '';
+                    for (let i = 1; i <= totalPages; i++) {
+                        paginationHtml += `<span class="page-btn ${i === currentPage ? 'active' : ''}" 
+                                                 onclick="changePage(${i})">${i}</span>`;
+                    }
+                    document.getElementById('pagination').innerHTML = paginationHtml;
+                } else {
+                    document.getElementById('pagination').innerHTML = '';
+                }
+            };
         }
 
-        // Update items counter
-        function updateItemsCounter() {
-            try {
-                const items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-                document.getElementById('itemsCounter').textContent = `${items.length} items`;
-            } catch (error) {
-                document.getElementById('itemsCounter').textContent = '0 items';
-            }
+        // Change page
+        function changePage(page) {
+            currentPage = page;
+            displayItems();
         }
 
-        // Make functions globally accessible
-        window.checkPassword = checkPassword;
-        window.switchTab = switchTab;
-        window.handleImageUpload = handleImageUpload;
-        window.startProcess = startProcess;
-        window.answerQuestion = answerQuestion;
-        window.saveDecision = saveDecision;
-        window.resetProcess = resetProcess;
+        // Update counter
+        async function updateCounter() {
+            if (!db) return;
+            
+            const transaction = db.transaction([STORE_NAME], 'readonly');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.count();
+            
+            request.onsuccess = () => {
+                const count = request.result;
+                document.getElementById('itemsCounter').textContent = `${count} items`;
+            };
+        }
+
+        // Update stats
+        async function updateStats() {
+            if (!db) return;
+            
+            const transaction = db.transaction([STORE_NAME], 'readonly');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.getAll();
+            
+            request.onsuccess = () => {
+                const items = request.result;
+                document.getElementById('totalStat').textContent = items.length;
+                document.getElementById('keptStat').textContent = items.filter(i => i.decision === 'keep').length;
+                document.getElementById('disposedStat').textContent = items.filter(i => i.decision === 'dispose').length;
+                document.getElementById('movedStat').textContent = items.filter(i => i.decision && i.decision.includes('move')).length;
+            };
+        }
+
+        // Export data
+        async function exportData() {
+            if (!db) return;
+            
+            const transaction = db.transaction([STORE_NAME], 'readonly');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.getAll();
+            
+            request.onsuccess = () => {
+                const items = request.result;
+                const blob = new Blob([JSON.stringify(items, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `curator-ai-${Date.now()}.json`;
+                a.click();
+                
+                alert(`Exported ${items.length} items!`);
+            };
+        }
+
+        // Import data
+        function importData() {
+            document.getElementById('importFile').click();
+        }
+
+        // Handle import
+        async function handleImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                try {
+                    const items = JSON.parse(e.target.result);
+                    
+                    if (!Array.isArray(items)) {
+                        alert('Invalid file format');
+                        return;
+                    }
+                    
+                    const transaction = db.transaction([STORE_NAME], 'readwrite');
+                    const store = transaction.objectStore(STORE_NAME);
+                    
+                    let added = 0;
+                    for (const item of items) {
+                        delete item.id; // Remove ID to get new one
+                        store.add(item);
+                        added++;
+                    }
+                    
+                    transaction.oncomplete = () => {
+                        alert(`Imported ${added} items successfully!`);
+                        updateCounter();
+                        updateStats();
+                        displayItems();
+                    };
+                    
+                } catch (error) {
+                    alert('Error importing file');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Clear data
+        async function clearData() {
+            if (!confirm('Delete ALL items? This cannot be undone!')) return;
+            
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.clear();
+            
+            request.onsuccess = () => {
+                alert('All data cleared');
+                updateCounter();
+                updateStats();
+                displayItems();
+            };
+        }
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check if localStorage is available
-            if (!isLocalStorageAvailable()) {
-                console.warn('localStorage not available');
-            }
-            
-            // Try to check auth
+        document.addEventListener('DOMContentLoaded', async function() {
             try {
-                if (localStorage.getItem('curatorAIAuth') === 'true') {
-                    document.getElementById('passwordModal').classList.add('hidden');
-                    document.getElementById('mainApp').style.display = 'block';
-                    updateItemsCounter();
-                    checkStorageSpace();
-                }
-            } catch (e) {
-                console.log('Cannot check auth state');
+                await initDB();
+                updateCounter();
+                
+                // Password field
+                document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') checkPassword();
+                });
+                
+                console.log('App initialized with IndexedDB');
+            } catch (error) {
+                console.error('Init error:', error);
+                alert('Database initialization failed. Please check your browser settings.');
             }
-            
-            // Add enter key support
-            document.getElementById('passwordInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') checkPassword();
-            });
         });
     </script>
 </body>
